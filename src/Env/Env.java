@@ -18,7 +18,7 @@ package Env;
 public abstract class Env {
     // Dados banco de dados
     public static final String ENV_SERVER   = "localhost";
-    public static final String ENV_DATABASE = "A3";
-    public static final String ENV_USER     = "root";
-    public static final String ENV_PASSWORD = "Mateus123";
+    public static final String ENV_DATABASE = "db_projeto";
+    public static final String ENV_USER     = "ale";
+    public static final String ENV_PASSWORD = "asd123";
 }
