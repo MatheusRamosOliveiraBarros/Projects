@@ -22,7 +22,7 @@ dist/
 # Maven
 target/
 dist/
-src/Env/Env.java
+src/Env/*.java
 
 # JetBrains IDE
 .idea/
