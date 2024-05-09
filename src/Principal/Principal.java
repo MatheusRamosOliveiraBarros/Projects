@@ -11,7 +11,7 @@ public class Principal {
         MainFrame tela = new MainFrame();
         tela.iniciar();
         tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // comportamento ao fechar a janela
-        tela.setSize(975, 550);
+        tela.setSize(1450, 875);
         tela.setLocationRelativeTo(null); // Centralizar a janela
         tela.setVisible(true);
     }
