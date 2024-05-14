@@ -46,8 +46,8 @@ public class Migration {
             // Seleciona arquivo por arquivo
             String[] migrationFiles = migrationFolder.list();
 
-
-            Arrays.sort(migrationFiles); // Ordena os arquivos
+            // Ordena os arquivos
+            Arrays.sort(migrationFiles); 
 
             // Executa arquivo por arquivo
 
@@ -55,7 +55,7 @@ public class Migration {
             int execucoes = 0;
             for (String migrationFile : migrationFiles) {
                 
-                // Extrai o nome identificador único do arquivo Formato (Ano | Mês | Dia | Data | Hora)(tudo junto) da criação 
+                // Extrai o nome identificador único do arquivo Formato (Ano | Mês | Dia | Hora | Minuto)(tudo junto) da criação 
                 String migrationName = migrationFile.split("_")[0]; 
 
                 if (!isMigrationExecuted(connection, migrationName)) { // Verifica se o arquivo não foi executado
