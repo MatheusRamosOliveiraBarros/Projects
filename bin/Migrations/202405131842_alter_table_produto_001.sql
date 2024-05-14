@@ -1,2 +1,0 @@
-ALTER TABLE produto
-ADD COLUMN tipo INT NOT NULL DEFAULT 1 COMMENT '1 - Comida; 2 - Bebida';
