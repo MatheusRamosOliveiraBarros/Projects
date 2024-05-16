@@ -2,14 +2,10 @@ package View;
 
 import javax.swing.JFrame;
 
-
-
 public class MainFrame extends JFrame {
 /* Configurações da tela */
     
     public void iniciar() {
-
-
  
         jFrame1 = new javax.swing.JFrame();
         jPanel4 = new javax.swing.JPanel();
@@ -414,8 +410,7 @@ public class MainFrame extends JFrame {
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
-    }                                           
-
+    }
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton jButton1;

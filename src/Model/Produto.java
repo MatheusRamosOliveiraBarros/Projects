@@ -2,6 +2,7 @@ package Model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class Produto {
@@ -10,16 +11,20 @@ public abstract class Produto {
     private String nome;
     private String descricao;
     private int quantidadeEstoque;
-    private float preco;
+    private float valor;
     private Date dataCadastro;
 
-    public Produto(int id, String nome, String descricao, int quantidadeEstoque, float preco, Date dataCadastro){
+    
+    public Produto(){
+    }
+
+    public Produto(int id, String nome, String descricao, int quantidadeEstoque, float valor, Date dataCadastro){
 
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.quantidadeEstoque = quantidadeEstoque;
-        this.preco = preco;
+        this.valor = valor;
         try {
 
             SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yy");
@@ -65,12 +70,12 @@ public abstract class Produto {
         this.quantidadeEstoque = quantidadeEstoque;
     }
 
-    public float getPreco() {
-        return preco;
+    public float getValor() {
+        return valor;
     }
 
-    public void setPreco(float preco) {
-        this.preco = preco;
+    public void setValor(float valor) {
+        this.valor = valor;
     }
 
     public Date getDataCadastro() {
