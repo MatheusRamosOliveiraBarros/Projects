@@ -36,6 +36,6 @@ public class Bebida extends Produto {
         Bebida objeto = new Bebida(nome, descricao, quantidadeEstoque, valor);
        ProdutoDAO.Lista.add(objeto);
        dao.InsertProduto(objeto, quantidadeEstoque);
-        throw new UnsupportedOperationException("Unimplemented method 'addBebida'");
+        return true;
     }
 }

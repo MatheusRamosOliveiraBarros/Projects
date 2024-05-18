@@ -92,7 +92,7 @@ public class ProdutoDAO {
 
     // Cadastra novo produto
     public boolean InsertProduto(Produto objeto, int tipoDeProduto) {
-        String sql = "INSERT INTO produto(id,nome,descricao,preco,quantidade_estoque,data_cadastro,tipo) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO produto(id,nome,descricao,preco,quantidade_estoque,tipo) VALUES(?,?,?,?,?,?)";
 
         try {
             PreparedStatement stmt = this.getConexao().prepareStatement(sql);
@@ -102,8 +102,7 @@ public class ProdutoDAO {
             stmt.setString(3, objeto.getDescricao());
             stmt.setFloat(4, objeto.getValor());
             stmt.setInt(5, objeto.getQuantidadeEstoque());
-            stmt.setDate(6, (java.sql.Date) objeto.getDataCadastro());
-            stmt.setInt(7, tipoDeProduto);
+            stmt.setInt(6, tipoDeProduto);
 
             stmt.execute();
             stmt.close();

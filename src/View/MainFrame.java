@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -190,6 +191,11 @@ public class MainFrame extends JFrame {
         Remove_bebida.setForeground(new java.awt.Color(200, 200, 200));
         Remove_bebida.setText("Remover");
         Remove_bebida.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
+        Remove_bebida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Remove_bebidaActionPerformed(evt);
+            }
+        });
 
         descricao_bebida.setBackground(new java.awt.Color(15, 4, 55));
         descricao_bebida.setForeground(new java.awt.Color(200, 200, 200));
@@ -473,6 +479,12 @@ public class MainFrame extends JFrame {
         carregaTabela();
     }// </editor-fold>                        
 
+    private void Remove_bebidaActionPerformed(ActionEvent evt) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'Remove_bebidaActionPerformed'");
+    }
+
+
     private void Nome_comidaActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
     }                                           
@@ -514,6 +526,7 @@ public class MainFrame extends JFrame {
                 this.Preco_bebida.setText("");
 
             }
+ 
 
     }  
 
