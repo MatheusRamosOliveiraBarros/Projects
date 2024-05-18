@@ -1,40 +1,64 @@
 package View;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import Model.Bebida;
+import Model.Comida;
+import Model.Produto;
 
 public class MainFrame extends JFrame {
-/* Configurações da tela */
+
+    //linkar com Model bebida e comida.//
+    private Bebida objBebida; 
+    private Comida objComida;
     
+    public MainFrame(){
+       this.objBebida = new Bebida();
+       this.objComida = new Comida();
+       this.carregaTabela();
+       iniciar();
+    }
+
+
+    /* Configurações da tela */
+
     public void iniciar() {
  
         jFrame1 = new javax.swing.JFrame();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        Edit_bebida = new javax.swing.JButton();
+        Nome_Bebida = new javax.swing.JTextField();
+        Preco_bebida = new javax.swing.JTextField();
+        Qtd_bebida = new javax.swing.JTextField();
+        Add_bebida = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
-        jTextField7 = new javax.swing.JTextField();
-        jPanel5 = new javax.swing.JPanel();
+        Tabela_Bebida = new javax.swing.JTable();
+        Remove_bebida = new javax.swing.JButton();
+        descricao_bebida = new javax.swing.JTextField();
+        Add_comida = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        Nome_comida = new javax.swing.JTextField();
+        Preco_comida = new javax.swing.JTextField();
+        Quantidade_comida = new javax.swing.JTextField();
+        Editar_comida = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jButton6 = new javax.swing.JButton();
-        jTextField8 = new javax.swing.JTextField();
+        Tabela_Comida = new javax.swing.JTable();
+        Remover_comida = new javax.swing.JButton();
+        Descricao_comida = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -60,50 +84,81 @@ public class MainFrame extends JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Bebidas");
 
-        jButton3.setBackground(new java.awt.Color(15, 4, 55));
-        jButton3.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(200, 200, 200));
-        jButton3.setText("Editar");
-        jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
+        Edit_bebida.setBackground(new java.awt.Color(15, 4, 55));
+        Edit_bebida.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        Edit_bebida.setForeground(new java.awt.Color(200, 200, 200));
+        Edit_bebida.setText("Editar");
+        Edit_bebida.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
 
-        jTextField1.setBackground(new java.awt.Color(15, 4, 55));
-        jTextField1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(200, 200, 200));
-        jTextField1.setText("Item 1");
-        jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Nome", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
-        jTextField1.setSelectionColor(new java.awt.Color(10, 3, 36));
+        Nome_Bebida.setBackground(new java.awt.Color(15, 4, 55));
+        Nome_Bebida.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        Nome_Bebida.setForeground(new java.awt.Color(200, 200, 200));
+        Nome_Bebida.setText("Item 1");
+        Nome_Bebida.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Nome", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
+        Nome_Bebida.setSelectionColor(new java.awt.Color(10, 3, 36));
 
-        jTextField2.setBackground(new java.awt.Color(15, 4, 55));
-        jTextField2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(200, 200, 200));
-        jTextField2.setText("1.99");
-        jTextField2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Preco", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
-        jTextField2.setSelectionColor(new java.awt.Color(10, 3, 36));
+        Preco_bebida.setBackground(new java.awt.Color(15, 4, 55));
+        Preco_bebida.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        Preco_bebida.setForeground(new java.awt.Color(200, 200, 200));
+        Preco_bebida.setText("1.99");
+        Preco_bebida.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Preco", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
+        Preco_bebida.setSelectionColor(new java.awt.Color(10, 3, 36));
 
-        jTextField3.setBackground(new java.awt.Color(15, 4, 55));
-        jTextField3.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(200, 200, 200));
-        jTextField3.setText("25");
-        jTextField3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Qtd", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
-        jTextField3.setSelectionColor(new java.awt.Color(10, 3, 36));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        Qtd_bebida.setBackground(new java.awt.Color(15, 4, 55));
+        Qtd_bebida.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        Qtd_bebida.setForeground(new java.awt.Color(200, 200, 200));
+        Qtd_bebida.setText("25");
+        Qtd_bebida.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Qtd", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
+        Qtd_bebida.setSelectionColor(new java.awt.Color(10, 3, 36));
+        Qtd_bebida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                Qtd_bebidaActionPerformed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(10, 3, 36));
-        jButton1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(200, 200, 200));
-        jButton1.setText("Adicionar Bebidas");
-        jButton1.setToolTipText("");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
+        Add_bebida.setBackground(new java.awt.Color(10, 3, 36));
+        Add_bebida.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        Add_bebida.setForeground(new java.awt.Color(200, 200, 200));
+        Add_bebida.setText("Adicionar Bebidas");
+        Add_bebida.setToolTipText("");
+        Add_bebida.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
+        Add_bebida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Add_bebidaActionPerformed(evt);
+            }
+        });
 
-        jTable1.setAutoCreateRowSorter(true);
-        jTable1.setBackground(new java.awt.Color(10, 3, 36));
-        jTable1.setForeground(new java.awt.Color(200, 200, 200));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Tabela_Bebida.setAutoCreateRowSorter(true);
+        Tabela_Bebida.setBackground(new java.awt.Color(10, 3, 36));
+        Tabela_Bebida.setForeground(new java.awt.Color(200, 200, 200));
+        Tabela_Bebida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -112,29 +167,37 @@ public class MainFrame extends JFrame {
             new String [] {
                 "Nome", "Descricao", "Valor", "Quantidade"
             }
-        ));
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTable1.setGridColor(new java.awt.Color(35, 24, 75));
-        jTable1.setName(""); // NOI18N
-        jTable1.setOpaque(false);
-        jTable1.setSelectionBackground(new java.awt.Color(15, 4, 55));
-        jTable1.setSelectionForeground(new java.awt.Color(185, 21, 204));
-        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        jTable1.setShowGrid(true);
-        jScrollPane3.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-        jButton5.setBackground(new java.awt.Color(15, 4, 55));
-        jButton5.setForeground(new java.awt.Color(200, 200, 200));
-        jButton5.setText("Remover");
-        jButton5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        Tabela_Bebida.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Tabela_Bebida.setGridColor(new java.awt.Color(35, 24, 75));
+        Tabela_Bebida.setName(""); // NOI18N
+        Tabela_Bebida.setOpaque(false);
+        Tabela_Bebida.setSelectionBackground(new java.awt.Color(15, 4, 55));
+        Tabela_Bebida.setSelectionForeground(new java.awt.Color(185, 21, 204));
+        Tabela_Bebida.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        Tabela_Bebida.setShowGrid(true);
+        jScrollPane3.setViewportView(Tabela_Bebida);
 
-        jTextField7.setBackground(new java.awt.Color(15, 4, 55));
-        jTextField7.setForeground(new java.awt.Color(200, 200, 200));
-        jTextField7.setText("jTextField7");
-        jTextField7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Descricao", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        Remove_bebida.setBackground(new java.awt.Color(15, 4, 55));
+        Remove_bebida.setForeground(new java.awt.Color(200, 200, 200));
+        Remove_bebida.setText("Remover");
+        Remove_bebida.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
+
+        descricao_bebida.setBackground(new java.awt.Color(15, 4, 55));
+        descricao_bebida.setForeground(new java.awt.Color(200, 200, 200));
+        descricao_bebida.setText("jTextField7");
+        descricao_bebida.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Descricao", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
+        descricao_bebida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                descricao_bebidaActionPerformed(evt);
             }
         });
 
@@ -151,23 +214,23 @@ public class MainFrame extends JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Nome_Bebida, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Preco_bebida, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(Qtd_bebida, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(Remove_bebida, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(Edit_bebida, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(Add_bebida, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(27, 27, 27))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField7)
+                            .addComponent(descricao_bebida)
                             .addComponent(jScrollPane3))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -179,65 +242,65 @@ public class MainFrame extends JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(descricao_bebida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Nome_Bebida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Qtd_bebida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Preco_bebida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Add_bebida, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Edit_bebida, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Remove_bebida, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         add(jPanel4, java.awt.BorderLayout.CENTER);
 
-        jPanel5.setBackground(new java.awt.Color(15, 4, 55));
-        jPanel5.setPreferredSize(new java.awt.Dimension(470, 667));
+        Add_comida.setBackground(new java.awt.Color(15, 4, 55));
+        Add_comida.setPreferredSize(new java.awt.Dimension(470, 667));
 
         jLabel5.setFont(new java.awt.Font("Z003", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(185, 21, 204));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Comidas");
 
-        jTextField4.setBackground(new java.awt.Color(15, 4, 55));
-        jTextField4.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(200, 200, 200));
-        jTextField4.setText("Item 1");
-        jTextField4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Nome", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
-        jTextField4.setSelectionColor(new java.awt.Color(10, 3, 36));
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        Nome_comida.setBackground(new java.awt.Color(15, 4, 55));
+        Nome_comida.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        Nome_comida.setForeground(new java.awt.Color(200, 200, 200));
+        Nome_comida.setText("Item 1");
+        Nome_comida.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Nome", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
+        Nome_comida.setSelectionColor(new java.awt.Color(10, 3, 36));
+        Nome_comida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                Nome_comidaActionPerformed(evt);
             }
         });
 
-        jTextField5.setBackground(new java.awt.Color(15, 4, 55));
-        jTextField5.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(200, 200, 200));
-        jTextField5.setText("2.99");
-        jTextField5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Preco", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
-        jTextField5.setSelectionColor(new java.awt.Color(10, 3, 36));
+        Preco_comida.setBackground(new java.awt.Color(15, 4, 55));
+        Preco_comida.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        Preco_comida.setForeground(new java.awt.Color(200, 200, 200));
+        Preco_comida.setText("2.99");
+        Preco_comida.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Preco", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
+        Preco_comida.setSelectionColor(new java.awt.Color(10, 3, 36));
 
-        jTextField6.setBackground(new java.awt.Color(15, 4, 55));
-        jTextField6.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(200, 200, 200));
-        jTextField6.setText("30");
-        jTextField6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Qtd", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
-        jTextField6.setSelectionColor(new java.awt.Color(10, 3, 36));
+        Quantidade_comida.setBackground(new java.awt.Color(15, 4, 55));
+        Quantidade_comida.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        Quantidade_comida.setForeground(new java.awt.Color(200, 200, 200));
+        Quantidade_comida.setText("30");
+        Quantidade_comida.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Qtd", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
+        Quantidade_comida.setSelectionColor(new java.awt.Color(10, 3, 36));
 
-        jButton4.setBackground(new java.awt.Color(15, 4, 55));
-        jButton4.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(200, 200, 200));
-        jButton4.setText("Editar");
-        jButton4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        Editar_comida.setBackground(new java.awt.Color(15, 4, 55));
+        Editar_comida.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        Editar_comida.setForeground(new java.awt.Color(200, 200, 200));
+        Editar_comida.setText("Editar");
+        Editar_comida.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
+        Editar_comida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                Editar_comidaActionPerformed(evt);
             }
         });
 
@@ -247,11 +310,25 @@ public class MainFrame extends JFrame {
         jButton2.setText("Adicionar Comidas");
         jButton2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
 
-        jTable2.setAutoCreateRowSorter(true);
-        jTable2.setBackground(new java.awt.Color(10, 3, 36));
-        jTable2.setForeground(new java.awt.Color(200, 200, 200));
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        Tabela_Comida.setAutoCreateRowSorter(true);
+        Tabela_Comida.setBackground(new java.awt.Color(10, 3, 36));
+        Tabela_Comida.setForeground(new java.awt.Color(200, 200, 200));
+        Tabela_Comida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -260,82 +337,91 @@ public class MainFrame extends JFrame {
             new String [] {
                 "Nome", "Descricao", "Valor", "Quantidade"
             }
-        ));
-        jTable2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTable2.setGridColor(new java.awt.Color(35, 24, 75));
-        jTable2.setSelectionBackground(new java.awt.Color(15, 4, 55));
-        jTable2.setSelectionForeground(new java.awt.Color(185, 21, 204));
-        jTable2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        jTable2.setShowGrid(true);
-        jScrollPane4.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-        jButton6.setBackground(new java.awt.Color(15, 4, 55));
-        jButton6.setForeground(new java.awt.Color(200, 200, 200));
-        jButton6.setText("Remover");
-        jButton6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
-        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        Tabela_Comida.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Tabela_Comida.setGridColor(new java.awt.Color(35, 24, 75));
+        Tabela_Comida.setOpaque(false);
+        Tabela_Comida.setSelectionBackground(new java.awt.Color(15, 4, 55));
+        Tabela_Comida.setSelectionForeground(new java.awt.Color(185, 21, 204));
+        Tabela_Comida.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        Tabela_Comida.setShowGrid(true);
+        jScrollPane4.setViewportView(Tabela_Comida);
 
-        jTextField8.setBackground(new java.awt.Color(15, 4, 55));
-        jTextField8.setForeground(new java.awt.Color(200, 200, 200));
-        jTextField8.setText("jTextField8");
-        jTextField8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Descricao", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
+        Remover_comida.setBackground(new java.awt.Color(15, 4, 55));
+        Remover_comida.setForeground(new java.awt.Color(200, 200, 200));
+        Remover_comida.setText("Remover");
+        Remover_comida.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
+        Remover_comida.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        Descricao_comida.setBackground(new java.awt.Color(15, 4, 55));
+        Descricao_comida.setForeground(new java.awt.Color(200, 200, 200));
+        Descricao_comida.setText("jTextField8");
+        Descricao_comida.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Descricao", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Z003", 0, 18), new java.awt.Color(0, 194, 186))); // NOI18N
+
+        javax.swing.GroupLayout Add_comidaLayout = new javax.swing.GroupLayout(Add_comida);
+        Add_comida.setLayout(Add_comidaLayout);
+        Add_comidaLayout.setHorizontalGroup(
+            Add_comidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Add_comidaLayout.createSequentialGroup()
+                .addGroup(Add_comidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addGroup(Add_comidaLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(Add_comidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(Add_comidaLayout.createSequentialGroup()
+                                .addComponent(Nome_comida, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Preco_comida, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(Quantidade_comida, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(Add_comidaLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Descricao_comida, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(Add_comidaLayout.createSequentialGroup()
+                        .addComponent(Editar_comida, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Remover_comida, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        Add_comidaLayout.setVerticalGroup(
+            Add_comidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Add_comidaLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel5)
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Descricao_comida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(Add_comidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Nome_comida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Preco_comida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Quantidade_comida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(Add_comidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Editar_comida, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Remover_comida, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        add(jPanel5, java.awt.BorderLayout.EAST);
+        add(Add_comida, java.awt.BorderLayout.EAST);
 
         jPanel3.setBackground(new java.awt.Color(10, 3, 36));
         jPanel3.setPreferredSize(new java.awt.Dimension(400, 667));
 
-        jLabel1.setFont(new java.awt.Font("Z003", 0, 42)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Z003", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(185, 21, 204));
         jLabel1.setText("Neon Knight Club");
         jLabel1.setToolTipText("");
@@ -353,31 +439,23 @@ public class MainFrame extends JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("We Fight Through Dancing");
 
-        jToggleButton1.setBackground(new java.awt.Color(15, 4, 55));
-        jToggleButton1.setForeground(new java.awt.Color(200, 200, 200));
-        jToggleButton1.setText("Modo Noturno");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(78, 78, 78))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(136, 136, 136)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jToggleButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(86, 86, 86)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(34, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,37 +466,96 @@ public class MainFrame extends JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jToggleButton1)
-                .addContainerGap())
+                .addContainerGap(476, Short.MAX_VALUE))
         );
 
         add(jPanel3, java.awt.BorderLayout.WEST);
+        carregaTabela();
     }// </editor-fold>                        
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void Nome_comidaActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
     }                                           
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void Editar_comidaActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
-    }                                        
+    }                                             
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void Qtd_bebidaActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
-    }                                           
+    }                                          
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void descricao_bebidaActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         // TODO add your handling code here:
+    }   
+
+    private void Add_bebidaActionPerformed(java.awt.event.ActionEvent evt) {                                           
+
+            
+            String nome = "";
+            String descricao = "";
+            float valor = 0;
+            int quantidadeEstoque = 0;
+            
+            //coleta as informações escritas
+            nome = this.Nome_Bebida.getText();
+            quantidadeEstoque = Integer.parseInt(this.Qtd_bebida.getText());
+            descricao = this.descricao_bebida.getText();
+            valor = Float.parseFloat(this.Preco_bebida.getText());
+
+            // envia os dados para o Controlador cadastrar
+            if (this.objBebida.addBebida(nome, descricao, valor, quantidadeEstoque)) {
+                JOptionPane.showMessageDialog(rootPane, "Bebida cadastrada");
+
+                // limpa campos da interface
+                this.Nome_Bebida.setText("");
+                this.Qtd_bebida.setText("");
+                this.descricao_bebida.setText("");
+                this.Preco_bebida.setText("");
+
+            }
+
+    }  
+
+        @SuppressWarnings("unchecked")
+        public void carregaTabela() {
+        if(Tabela_Bebida!= null){    
+            DefaultTableModel modelo = (DefaultTableModel) this.Tabela_Bebida.getModel();
+            modelo.setNumRows(0);
+            System.out.println(objBebida.getLista().size());
+            System.out.println(Tabela_Bebida.getModel());
+            ArrayList<Object> minhalistaBebida = new ArrayList<>();
+            minhalistaBebida = objBebida.getLista();
+
+            for (Object a : minhalistaBebida) {
+                modelo.addRow(new Object[]{
+                    ((Produto) a).getNome(),
+                    ((Produto) a).getDescricao(),
+                    ((Produto) a).getValor(),
+                    ((Produto) a).getQuantidadeEstoque()
+                });
+        }
+        }
     }
 
     // Variables declaration - do not modify                     
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton Add_bebida;
+    private javax.swing.JPanel Add_comida;
+    private javax.swing.JTextField Descricao_comida;
+    private javax.swing.JButton Edit_bebida;
+    private javax.swing.JButton Editar_comida;
+    private javax.swing.JTextField Nome_Bebida;
+    private javax.swing.JTextField Nome_comida;
+    private javax.swing.JTextField Preco_bebida;
+    private javax.swing.JTextField Preco_comida;
+    private javax.swing.JTextField Qtd_bebida;
+    private javax.swing.JTextField Quantidade_comida;
+    private javax.swing.JButton Remove_bebida;
+    private javax.swing.JButton Remover_comida;
+    private javax.swing.JTable Tabela_Bebida;
+    private javax.swing.JTable Tabela_Comida;
+    private javax.swing.JTextField descricao_bebida;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -427,21 +564,9 @@ public class MainFrame extends JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JToggleButton jToggleButton1;
-    // End of variables                  
+    // End of variables declaration        
 }
 
 

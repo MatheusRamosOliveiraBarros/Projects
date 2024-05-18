@@ -92,7 +92,7 @@ public class ProdutoDAO {
 
     // Cadastra novo produto
     public boolean InsertProduto(Produto objeto, int tipoDeProduto) {
-        String sql = "INSERT INTO produto(id,nome,descricao,valor,quantidade_estoque,data_cadastro,tipo) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO produto(id,nome,descricao,preco,quantidade_estoque,data_cadastro,tipo) VALUES(?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement stmt = this.getConexao().prepareStatement(sql);

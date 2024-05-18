@@ -19,11 +19,23 @@ public class Bebida extends Produto {
         this.dao = new ProdutoDAO();
     }
 
+    public Bebida(String nome, String descricao, int quantidadeEstoque, float valor) {
+        super(0 ,nome, descricao, quantidadeEstoque, valor, new Date());
+        this.dao = new ProdutoDAO();
+    }
+
     public int getTipoDeProduto() {
         return tipoDeProduto;
     }
 
     public ArrayList getLista() {
         return dao.getLista(this.tipoDeProduto);
+    }
+
+    public boolean addBebida(String nome, String descricao, float valor, int quantidadeEstoque) {
+        Bebida objeto = new Bebida(nome, descricao, quantidadeEstoque, valor);
+       ProdutoDAO.Lista.add(objeto);
+       dao.InsertProduto(objeto, quantidadeEstoque);
+        throw new UnsupportedOperationException("Unimplemented method 'addBebida'");
     }
 }
