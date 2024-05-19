@@ -65,12 +65,13 @@ public class ProdutoDAO {
             Statement stmt = this.getConexao().createStatement();
 
             ResultSet res = stmt.executeQuery("SELECT * FROM produto WHERE tipo = " + tipoDeProduto);
+            System.out.println("Número de registros encontrados: " + res.getMetaData().getColumnCount());
             while (res.next()) {
 
                 int id = res.getInt("id");
                 String nome = res.getString("nome");
                 String descricao = res.getString("descricao");
-                float valor = res.getFloat("valor");
+                float valor = res.getFloat("preco");
                 int quantidadeEstoque = res.getInt("quantidade_estoque");
                 Date dataCadastro = res.getDate("data_cadastro");
 
@@ -83,7 +84,7 @@ public class ProdutoDAO {
                 }
             }
             stmt.close();
-
+            
         } catch (SQLException ex) {
         }
 

@@ -517,14 +517,13 @@ public class MainFrame extends JFrame {
 
             // envia os dados para o Controlador cadastrar
             if (this.objBebida.addBebida(nome, descricao, valor, quantidadeEstoque)) {
-                JOptionPane.showMessageDialog(rootPane, "Bebida cadastrada");
 
                 // limpa campos da interface
                 this.Nome_Bebida.setText("");
                 this.Qtd_bebida.setText("");
                 this.descricao_bebida.setText("");
                 this.Preco_bebida.setText("");
-
+                carregaTabela();
             }
  
 
