@@ -24,6 +24,11 @@ public class Bebida extends Produto {
         this.dao = new ProdutoDAO();
     }
 
+    public Bebida(int id, String nome, String descricao, int quantidadeEstoque, float valor) {
+        super(id ,nome, descricao, quantidadeEstoque, valor, new Date());
+        this.dao = new ProdutoDAO();
+    }
+
     public int getTipoDeProduto() {
         return tipoDeProduto;
     }
@@ -36,6 +41,18 @@ public class Bebida extends Produto {
         Bebida objeto = new Bebida(nome, descricao, quantidadeEstoque, valor);
        ProdutoDAO.Lista.add(objeto);
        dao.InsertProduto(objeto, tipoDeProduto);
+        return true;
+    }
+
+    public boolean editBebida(int id, String nome, String descricao, float valor, int quantidadeEstoque) {
+        Bebida objeto = new Bebida(id ,nome, descricao, quantidadeEstoque, valor);
+        ProdutoDAO.Lista.add(objeto);
+        dao.UpdateProduto(objeto);
+        return true;
+    }
+
+    public boolean DeleteProduto(int idBebida) {
+        dao.DeleteProduto(idBebida);
         return true;
     }
 }

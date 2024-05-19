@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +21,8 @@ public class MainFrame extends JFrame {
     //linkar com Model bebida e comida.//
     private Bebida objBebida; 
     private Comida objComida;
+    private int idBebida;
+    private int idComida;
     
     public MainFrame(){
        this.objBebida = new Bebida();
@@ -90,6 +93,11 @@ public class MainFrame extends JFrame {
         Edit_bebida.setForeground(new java.awt.Color(200, 200, 200));
         Edit_bebida.setText("Editar");
         Edit_bebida.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
+        Edit_bebida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Edit_bebidaActionPerformed(evt);
+            }
+        });
 
         Nome_Bebida.setBackground(new java.awt.Color(15, 4, 55));
         Nome_Bebida.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -440,7 +448,7 @@ public class MainFrame extends JFrame {
         jLabel2.setName(""); // NOI18N
         jLabel2.setPreferredSize(new java.awt.Dimension(50, 50));
 
-        jLabel3.setFont(new java.awt.Font("Z003", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Z003", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(185, 21, 204));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("We Fight Through Dancing");
@@ -477,11 +485,78 @@ public class MainFrame extends JFrame {
 
         add(jPanel3, java.awt.BorderLayout.WEST);
         carregaTabela();
+        Tabela_Bebida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Tabela_BebidaMouseClicked(evt);
+            }
+        });
     }// </editor-fold>                        
 
+    protected void Edit_bebidaActionPerformed(ActionEvent evt) {
+        String nome = "";
+        String descricao = "";
+        float valor = 0;
+        int quantidadeEstoque = 0;
+        int id;
+        
+        //coleta as informações escritas
+        nome = this.Nome_Bebida.getText();
+        quantidadeEstoque = Integer.parseInt(this.Qtd_bebida.getText());
+        descricao = this.descricao_bebida.getText();
+        valor = Float.parseFloat(this.Preco_bebida.getText());
+        id = idBebida;
+        System.out.println("ID Bebida: " + idBebida);
+
+        if (this.objBebida.editBebida(id, nome, descricao, valor, quantidadeEstoque)) {
+
+            // limpa campos da interface
+            this.Nome_Bebida.setText("");
+            this.Qtd_bebida.setText("");
+            this.descricao_bebida.setText("");
+            this.Preco_bebida.setText("");
+            carregaTabela();
+        }
+
+    }
+
+
+    protected void Tabela_BebidaMouseClicked(MouseEvent evt) {
+    int linha = Tabela_Bebida.getSelectedRow();
+    if (linha!= -1) {
+        Bebida bebida = (Bebida) objBebida.getLista().get(linha);
+        idBebida = bebida.getId();
+        String nome = Tabela_Bebida.getValueAt(linha, 0).toString();
+        String descricao = Tabela_Bebida.getValueAt(linha, 1).toString();
+        String preco = Tabela_Bebida.getValueAt(linha, 2).toString();
+        String quantidade = Tabela_Bebida.getValueAt(linha, 3).toString();
+        
+        this.Nome_Bebida.setText(nome);
+        this.descricao_bebida.setText(descricao);
+        this.Preco_bebida.setText(preco);
+        this.Qtd_bebida.setText(quantidade);
+    }
+    }
+
+
     private void Remove_bebidaActionPerformed(ActionEvent evt) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'Remove_bebidaActionPerformed'");
+        int linha = Tabela_Bebida.getSelectedRow();
+        Bebida bebida = (Bebida) objBebida.getLista().get(linha);
+        if (this.Tabela_Bebida.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione uma bebida para remover!");
+        } else {
+            idBebida = bebida.getId();
+
+            if (this.objBebida.DeleteProduto(idBebida)) {
+
+                // limpa os campos
+                this.Nome_Bebida.setText("");
+                this.Qtd_bebida.setText("");
+                this.descricao_bebida.setText("");
+                this.Preco_bebida.setText("");
+                carregaTabela();
+        }
+    }
+
     }
 
 
@@ -500,6 +575,7 @@ public class MainFrame extends JFrame {
     private void descricao_bebidaActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         // TODO add your handling code here:
     }   
+
 
     private void Add_bebidaActionPerformed(java.awt.event.ActionEvent evt) {                                           
 

@@ -84,7 +84,7 @@ public class ProdutoDAO {
                 }
             }
             stmt.close();
-            
+
         } catch (SQLException ex) {
         }
 
@@ -131,7 +131,7 @@ public class ProdutoDAO {
 
     // Edita um Produto específico pelo seu campo ID
     public boolean UpdateProduto(Produto objeto) {
-        String sql = "UPDATE produto set nome = ? ,descricao = ? ,valor = ? ,quantidade_estoque = ? WHERE id = ?";
+        String sql = "UPDATE produto set nome = ? ,descricao = ? ,preco = ? ,quantidade_estoque = ? WHERE id = ?";
 
         try {
             PreparedStatement stmt = this.getConexao().prepareStatement(sql);
