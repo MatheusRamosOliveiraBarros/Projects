@@ -28,6 +28,7 @@ public class MainFrame extends JFrame {
        this.objBebida = new Bebida();
        this.objComida = new Comida();
        this.carregaTabela();
+       this.carregatabelacomida();
        iniciar();
     }
 
@@ -204,6 +205,7 @@ public class MainFrame extends JFrame {
                 Remove_bebidaActionPerformed(evt);
             }
         });
+       
 
         descricao_bebida.setBackground(new java.awt.Color(15, 4, 55));
         descricao_bebida.setForeground(new java.awt.Color(200, 200, 200));
@@ -323,6 +325,12 @@ public class MainFrame extends JFrame {
         jButton2.setForeground(new java.awt.Color(200, 200, 200));
         jButton2.setText("Adicionar Comidas");
         jButton2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Add_ComidaActionPerformed(evt);
+            }
+        });
+
 
         Tabela_Comida.setAutoCreateRowSorter(true);
         Tabela_Comida.setBackground(new java.awt.Color(10, 3, 36));
@@ -374,6 +382,11 @@ public class MainFrame extends JFrame {
         Remover_comida.setText("Remover");
         Remover_comida.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(200, 200, 200), 1, true));
         Remover_comida.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Remover_comida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Remover_comidaActionPerformed(evt);
+            }
+        });
 
         Descricao_comida.setBackground(new java.awt.Color(15, 4, 55));
         Descricao_comida.setForeground(new java.awt.Color(200, 200, 200));
@@ -485,12 +498,73 @@ public class MainFrame extends JFrame {
 
         add(jPanel3, java.awt.BorderLayout.WEST);
         carregaTabela();
+        carregatabelacomida();
         Tabela_Bebida.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Tabela_BebidaMouseClicked(evt);
             }
         });
+        Tabela_Comida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Tabela_ComidaMouseClicked(evt);
+            }
+        });
+
+
     }// </editor-fold>                        
+
+    
+
+  
+
+
+    protected void Remover_comidaActionPerformed(ActionEvent evt) {
+            int linha = Tabela_Comida.getSelectedRow();
+            Comida comida = (Comida) objComida.getLista().get(linha);
+            if (this.Tabela_Comida.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(null, "Selecione uma comida para remover!");
+            } else {
+                idComida = comida.getId();
+    
+                if (this.objComida.DeleteProduto(idComida)) {
+    
+                    // limpa os campos
+                    this.Nome_comida.setText("");
+                    this.Quantidade_comida.setText("");
+                    this.Descricao_comida.setText("");
+                    this.Preco_comida.setText("");
+                    carregatabelacomida();
+                }
+        
+            }
+        
+            }
+
+
+    protected void Add_ComidaActionPerformed(ActionEvent evt) {
+        String nome = "";
+            String descricao = "";
+            float valor = 0;
+            int quantidadeEstoque = 0;
+            
+            //coleta as informações escritas
+            nome = this.Nome_comida.getText();
+            quantidadeEstoque = Integer.parseInt(this.Quantidade_comida.getText());
+            descricao = this.Descricao_comida.getText();
+            valor = Float.parseFloat(this.Preco_comida.getText());
+
+            // envia os dados para o Controlador cadastrar
+            if (this.objComida.Add_comida(nome, descricao, valor, quantidadeEstoque)) {
+
+                // limpa campos da interface
+                this.Nome_comida.setText("");
+                this.Quantidade_comida.setText("");
+                this.Descricao_comida.setText("");
+                this.Preco_comida.setText("");
+                carregatabelacomida();
+            }
+        }
+
 
     protected void Edit_bebidaActionPerformed(ActionEvent evt) {
         String nome = "";
@@ -518,8 +592,31 @@ public class MainFrame extends JFrame {
         }
 
     }
+    protected void  Editar_comidaActionPerformed(ActionEvent evt) {
+        String nome = "";
+        String descricao = "";
+        float valor = 0;
+        int quantidadeEstoque = 0;
+        int id;
+        
+        //coleta as informações escritas
+        nome = this.Nome_comida.getText();
+        quantidadeEstoque = Integer.parseInt(this.Quantidade_comida.getText());
+        descricao = this.Descricao_comida.getText();
+        valor = Float.parseFloat(this.Preco_comida.getText());
+        id = idComida;
+        System.out.println("ID comida: " + idComida);
 
+        if (this.objComida.Editar_comida(id, nome, descricao, valor, quantidadeEstoque)) {
 
+            // limpa campos da interface
+            this.Nome_comida.setText("");
+            this.Quantidade_comida.setText("");
+            this.Descricao_comida.setText("");
+            this.Preco_comida.setText("");
+            carregatabelacomida();
+        }
+    }
     protected void Tabela_BebidaMouseClicked(MouseEvent evt) {
     int linha = Tabela_Bebida.getSelectedRow();
     if (linha!= -1) {
@@ -555,18 +652,33 @@ public class MainFrame extends JFrame {
                 this.Preco_bebida.setText("");
                 carregaTabela();
         }
+        
     }
 
     }
 
+    protected void Tabela_ComidaMouseClicked(MouseEvent evt) {
+        int linha = Tabela_Comida.getSelectedRow();
+        if (linha!= -1) {
+            Comida Comida = (Comida) objComida.getLista().get(linha);
+            idComida = Comida.getId();
+            System.out.println("ID comida: " + idComida);
+            String nome = Tabela_Comida.getValueAt(linha, 0).toString();
+            String descricao = Tabela_Comida.getValueAt(linha, 1).toString();
+            String preco = Tabela_Comida.getValueAt(linha, 2).toString();
+            String quantidade = Tabela_Comida.getValueAt(linha, 3).toString();
+            
+            this.Nome_comida.setText(nome);
+            this.Descricao_comida.setText(descricao);
+            this.Preco_comida.setText(preco);
+            this.Quantidade_comida.setText(quantidade);
+        }
+    }
 
     private void Nome_comidaActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
     }                                           
-
-    private void Editar_comidaActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        // TODO add your handling code here:
-    }                                             
+                                           
 
     private void Qtd_bebidaActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
@@ -610,8 +722,6 @@ public class MainFrame extends JFrame {
         if(Tabela_Bebida!= null){    
             DefaultTableModel modelo = (DefaultTableModel) this.Tabela_Bebida.getModel();
             modelo.setNumRows(0);
-            System.out.println(objBebida.getLista().size());
-            System.out.println(Tabela_Bebida.getModel());
             ArrayList<Object> minhalistaBebida = new ArrayList<>();
             minhalistaBebida = objBebida.getLista();
 
@@ -624,7 +734,25 @@ public class MainFrame extends JFrame {
                 });
         }
         }
-    }
+       }
+
+       @SuppressWarnings("unchecked")
+       public void carregatabelacomida() {
+       if(Tabela_Comida!= null){    
+           DefaultTableModel modelo = (DefaultTableModel) this.Tabela_Comida.getModel();
+           modelo.setNumRows(0);
+           ArrayList<Object> minhalistaComida = new ArrayList<>();
+           minhalistaComida = objComida.getLista();
+
+           for (Object a : minhalistaComida) {
+               modelo.addRow(new Object[]{
+                   ((Produto) a).getNome(),
+                   ((Produto) a).getDescricao(),
+                   ((Produto) a).getValor(),
+                   ((Produto) a).getQuantidadeEstoque()
+               });
+       }}
+       }
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton Add_bebida;
