@@ -4,68 +4,27 @@ import Model.Produto;
 import Model.Bebida;
 import Model.Comida;
 import java.util.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import static Env.Env.*;
 
 public class ProdutoDAO {
     
     public static ArrayList<Produto> Lista = new ArrayList<Produto>();
+    private DAO dao;
 
     public ProdutoDAO() {
-
-    }
-
-    public Connection getConexao() {
-
-        Connection connection = null;  // Instância da conexão
-
-        try {
-            // Carregamento do JDBC Driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Configurar a conexão
-            String url = "jdbc:mysql://" + ENV_SERVER + ":3306/" + ENV_DATABASE + "?useTimezone=true&serverTimezone=UTC";
-
-            connection = DriverManager.getConnection(url, ENV_USER, ENV_PASSWORD);
-
-            // Testando..
-            if (connection != null) {
-                System.out.println("Status: Conectado!");
-            } else {
-                System.out.println("Status: N�O CONECTADO!");
-            }
-
-            return connection;
-
-        } catch (ClassNotFoundException e) {  //Driver nao encontrado
-            System.out.println("O driver nao foi encontrado. " + e.getMessage() );
-            return null;
-
-        } catch (SQLException e) {
-            System.out.println("Nao foi possivel conectar...");
-            return null;
-
-        } catch (NoClassDefFoundError e) { // Trata exceção se a importação dos arquivos env falhar
-            System.err.println("Erro ao importar as variáveis de ambiente: " + e.getMessage());
-            System.err.println("Certifique-se de criar o arquivo Env.java na raiz do projeto.");
-            return null;
-        }
+        this.dao = new DAO();
     }
 
     // Retorna a Lista de Produtos(objetos)
     public ArrayList getLista(int tipoDeProduto) {
         Lista.clear(); // Limpa ArrayList
-
         try {
-            Statement stmt = this.getConexao().createStatement();
+            Statement stmt = this.dao.getConexao().createStatement();
 
             ResultSet res = stmt.executeQuery("SELECT * FROM produto WHERE tipo = " + tipoDeProduto);
-            System.out.println("Número de registros encontrados: " + res.getMetaData().getColumnCount());
             while (res.next()) {
 
                 int id = res.getInt("id");
@@ -96,7 +55,7 @@ public class ProdutoDAO {
         String sql = "INSERT INTO produto(id,nome,descricao,preco,quantidade_estoque,tipo) VALUES(?,?,?,?,?,?)";
 
         try {
-            PreparedStatement stmt = this.getConexao().prepareStatement(sql);
+            PreparedStatement stmt = this.dao.getConexao().prepareStatement(sql);
 
             stmt.setInt(1, objeto.getId());
             stmt.setString(2, objeto.getNome());
@@ -119,7 +78,7 @@ public class ProdutoDAO {
     // Deleta um produto específico pelo seu campo ID
     public boolean DeleteProduto(int id) {
         try {
-            Statement stmt = this.getConexao().createStatement();
+            Statement stmt = this.dao.getConexao().createStatement();
             stmt.executeUpdate("DELETE FROM produto WHERE id = " + id);
             stmt.close();            
             
@@ -134,7 +93,7 @@ public class ProdutoDAO {
         String sql = "UPDATE produto set nome = ? ,descricao = ? ,preco = ? ,quantidade_estoque = ? WHERE id = ?";
 
         try {
-            PreparedStatement stmt = this.getConexao().prepareStatement(sql);
+            PreparedStatement stmt = this.dao.getConexao().prepareStatement(sql);
 
             stmt.setString(1, objeto.getNome());
             stmt.setString(2, objeto.getDescricao());
@@ -158,7 +117,7 @@ public class ProdutoDAO {
         Object objeto = null;
         
         try {
-            Statement stmt = this.getConexao().createStatement();
+            Statement stmt = this.dao.getConexao().createStatement();
             ResultSet res = stmt.executeQuery("SELECT * FROM produto WHERE id = " + id);
             
             if (res.next()) {
@@ -193,7 +152,7 @@ public class ProdutoDAO {
 
         int maiorID = 0;
         try {
-            Statement stmt = this.getConexao().createStatement();
+            Statement stmt = this.dao.getConexao().createStatement();
             ResultSet res = stmt.executeQuery("SELECT MAX(id) id FROM produto");
             res.next();
             maiorID = res.getInt("id");

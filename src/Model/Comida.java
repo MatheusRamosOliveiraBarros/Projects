@@ -5,7 +5,7 @@ import DAO.ProdutoDAO;
 import java.util.ArrayList;
 
 public class Comida extends Produto {
-    // Número 1 para bebidas
+    // Número 1 para comidas
     private int tipoDeProduto = 1;
     private ProdutoDAO dao; 
 
@@ -38,18 +38,16 @@ public class Comida extends Produto {
     }
     public boolean Add_comida(String nome, String descricao, float valor, int quantidadeEstoque) {
         Comida objeto = new Comida(nome, descricao, quantidadeEstoque, valor);
-       ProdutoDAO.Lista.add(objeto);
-       dao.InsertProduto(objeto, tipoDeProduto);
+        ProdutoDAO.Lista.add(objeto);
+        dao.InsertProduto(objeto, tipoDeProduto);
         return true;
     }
 
     public boolean Editar_comida(int id, String nome, String descricao, float valor, int quantidadeEstoque) {
         Comida objeto = new Comida(id, nome, descricao, quantidadeEstoque, valor);
         ProdutoDAO.Lista.add(objeto);
-       dao.UpdateProduto(objeto);
-       return true;
-
-
+        dao.UpdateProduto(objeto);
+        return true;
     }
 
     public boolean DeleteProduto(int idComida) {

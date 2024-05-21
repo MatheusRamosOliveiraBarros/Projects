@@ -39,8 +39,8 @@ public class Bebida extends Produto {
 
     public boolean addBebida(String nome, String descricao, float valor, int quantidadeEstoque) {
         Bebida objeto = new Bebida(nome, descricao, quantidadeEstoque, valor);
-       ProdutoDAO.Lista.add(objeto);
-       dao.InsertProduto(objeto, tipoDeProduto);
+        ProdutoDAO.Lista.add(objeto);
+        dao.InsertProduto(objeto, tipoDeProduto);
         return true;
     }
 
