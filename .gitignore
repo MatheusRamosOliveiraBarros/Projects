@@ -24,6 +24,8 @@ target/
 dist/
 src/Env/*.java
 
+.vscode/settings.json
+
 # JetBrains IDE
 .idea/
 
