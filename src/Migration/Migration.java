@@ -99,6 +99,7 @@ public class Migration {
         }
     }
 
+    // Verifica se o migration já foi executado (estará gravado no banco de dados)
     private static boolean isMigrationExecuted(Connection connection, String migrationName) throws SQLException {
         String query = "SELECT * FROM migration WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -108,6 +109,8 @@ public class Migration {
             }
         }
     }
+
+    // Execucta o migration
     private static void executeMigration(Connection connection, String migrationFile) throws IOException, SQLException {
         String filePath = MIGRATION_FOLDER_PATH + migrationFile;
         StringBuilder queryBuilder = new StringBuilder();
@@ -125,6 +128,7 @@ public class Migration {
         }
     }
 
+    // Grava o migration após sua execução
     private static void recordMigration(Connection connection, String migrationName) throws SQLException {
         String insertSQL = "INSERT INTO migration (id) VALUES (?)";
         try (PreparedStatement statement = connection.prepareStatement(insertSQL)) {
