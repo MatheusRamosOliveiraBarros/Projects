@@ -13,12 +13,13 @@ public class UsuarioDAO {
     public static ArrayList<Usuario> Lista = new ArrayList<Usuario>();
     private DAO dao;
 
+
     public UsuarioDAO() {
         this.dao = new DAO();
     }
 
     public Boolean validarLogin(String email, String senha) {
-        String sql = "SELECT COUNT(*) count FROM usuarios WHERE email = ? AND senha = ?";
+        String sql = "SELECT COUNT(*) count FROM usuario WHERE email = ? AND senha = ?";
 
         try (Connection conn = dao.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -34,7 +35,6 @@ public class UsuarioDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
         return false;
     }
 

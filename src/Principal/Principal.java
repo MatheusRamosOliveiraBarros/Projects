@@ -2,16 +2,16 @@ package Principal;
 
 import javax.swing.JFrame;
 
-import View.MainFrame;
+import View.Login;
 
 public class Principal {
 
     public static void main(String[] args) {
         /* Abrir tela do Aplicativo Neon Knight Club */
-        MainFrame tela = new MainFrame();
-        tela.iniciar();
+       JFrame tela = new Login();
+        ((Login) tela).Inicio();
         tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // comportamento ao fechar a janela
-        tela.setSize(1450, 875);
+        tela.setSize(600, 400);
         tela.setLocationRelativeTo(null); // Centralizar a janela
         tela.setVisible(true);
     }

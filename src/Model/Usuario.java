@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import DAO.UsuarioDAO;
 
 
 public class Usuario {
@@ -14,6 +15,7 @@ public class Usuario {
     private String email;
     private Date dataCadastro;
     private String senha;
+    private UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     public Usuario() {
     }
@@ -30,17 +32,16 @@ public class Usuario {
         } catch (ParseException e){
 
             e.printStackTrace();
-
         }
     }
+   
 
     public Usuario(int id, String nome, String email, Date dataCadastro, String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;
-
         // Converte a senha em SHA-256
-        this.senha = this.hashSenha(senha);
+        this.senha = Usuario.hashSenha(senha);
         try {
 
             SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yy");
@@ -108,5 +109,21 @@ public class Usuario {
 
     public Date getDataCadastro() {
         return dataCadastro;
+    }
+
+
+
+    public boolean addUsuario(String nome, String senha) {
+        email = nome + "@NeonNight.com";
+        Usuario objeto = new Usuario(id ,nome, email , new Date(), senha);
+        UsuarioDAO.Lista.add(objeto);
+        usuarioDAO.InsertUsuario(objeto);
+        return true;
+    }
+
+    public boolean olharUsuario(String nome, String senha) {
+        email = nome + "@NeonNight.com";
+        Usuario objeto = new Usuario(id, nome, email, new Date(), senha);
+        return usuarioDAO.validarLogin(email, objeto.getSenha());
     }
 }
