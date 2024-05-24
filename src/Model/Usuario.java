@@ -122,7 +122,8 @@ public class Usuario {
     }
 
     public boolean olharUsuario(String nome, String senha) {
-        email = nome + "@NeonNight.com";
+        // Para validar verifica se já tem a extensão do email, se não preenche automático.
+        email = nome.contains("@") ? nome : nome + "@NeonNight.com";
         Usuario objeto = new Usuario(id, nome, email, new Date(), senha);
         return usuarioDAO.validarLogin(email, objeto.getSenha());
     }

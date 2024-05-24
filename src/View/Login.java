@@ -11,7 +11,7 @@ import DAO.UsuarioDAO;
 import Model.Usuario;
 
 
-public class Login<usuarioObj> extends JFrame  {
+public class Login <usuarioObj> extends JFrame  {
     private Usuario objUsuario;
     private String email;
 
@@ -28,7 +28,7 @@ public class Login<usuarioObj> extends JFrame  {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         usuario_local = new javax.swing.JTextField();
-        Senha_local = new javax.swing.JTextField();
+        Senha_local = new javax.swing.JPasswordField();
         Login_botao = new javax.swing.JButton();
         Criar_botao = new javax.swing.JButton();
     
@@ -139,7 +139,7 @@ public class Login<usuarioObj> extends JFrame  {
             dispose();// fecha a janela de login
 
         } else {
-            JOptionPane.showMessageDialog(null, "Invalid username or password.");
+            JOptionPane.showMessageDialog(null, "Usuário e/ou senha inválido(s).");
         }
     }               
 
@@ -154,11 +154,17 @@ public class Login<usuarioObj> extends JFrame  {
             JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos.");
             return;
         }
-    
+
+        // Usa uma expressãozinha regular para não deixar cadastrar caracter especial e dar treta
+        if (usuario.matches(".*[^a-zA-Z0-9].*")) {
+            JOptionPane.showMessageDialog(null, "Usuário informado não pode conter caracteres especiais");
+            return;
+        }
+        
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         email = usuario + "@NeonNight.com";
         if (usuarioDAO.validarEmailExistente(email)) {
-            JOptionPane.showMessageDialog(null, "Email already exists.");
+            JOptionPane.showMessageDialog(null, "Email informado já existe.");
             return;
         }
     
@@ -166,7 +172,7 @@ public class Login<usuarioObj> extends JFrame  {
         if (objUsuario.addUsuario(usuario, senha)) {
             this.usuario_local.setText("");
             this.Senha_local.setText("");
-            JOptionPane.showMessageDialog(null, "Cadastrado. Seu novo Email da Empresa:" + email);
+            JOptionPane.showMessageDialog(null, "Cadastrado. Seu novo Email da Empresa: " + email);
         }
     }                                           
 
