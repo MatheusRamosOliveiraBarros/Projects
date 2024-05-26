@@ -4,7 +4,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import DAO.DAO;
 import DAO.UsuarioDAO;
 
 
@@ -16,9 +18,12 @@ public class Usuario {
     private Date dataCadastro;
     private String senha;
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private UsuarioDAO dao;
 
     public Usuario() {
+        this.dao = new UsuarioDAO();
     }
+
 
     public Usuario(int id, String nome, String email, Date dataCadastro) {
         this.id = id;
@@ -126,5 +131,16 @@ public class Usuario {
         email = nome.contains("@") ? nome : nome + "@NeonNight.com";
         Usuario objeto = new Usuario(id, nome, email, new Date(), senha);
         return usuarioDAO.validarLogin(email, objeto.getSenha());
+    }
+
+    @SuppressWarnings("unchecked")
+    public ArrayList<Object> getLista() {
+        return dao.getLista();
+    }
+
+
+    public boolean DeleteUsuario(int idUsuarioInt) {
+        dao.DeleteUsuario(idUsuarioInt);
+        return true;
     }
 }

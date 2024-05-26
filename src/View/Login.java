@@ -14,6 +14,7 @@ import Model.Usuario;
 public class Login <usuarioObj> extends JFrame  {
     private Usuario objUsuario;
     private String email;
+    public static String loggedUser;
 
 
     public Login() {
@@ -59,6 +60,7 @@ public class Login <usuarioObj> extends JFrame  {
         });
     
         Criar_botao.setText("Criar conta");
+        Criar_botao.setVisible(false);
         Criar_botao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Criar_botaoActionPerformed(evt);
@@ -107,6 +109,7 @@ public class Login <usuarioObj> extends JFrame  {
                        .addComponent(Criar_botao))
                    .addContainerGap(11, Short.MAX_VALUE))
         );
+        addAdmin();
     }                    
 
     private void usuario_localActionPerformed(java.awt.event.ActionEvent evt) {                                              
@@ -129,7 +132,7 @@ public class Login <usuarioObj> extends JFrame  {
         }
         // Verifica se usuário existe
         if (objUsuario.olharUsuario(usuario, senha)) {
-
+            loggedUser = usuario;
             MainFrame tela = new MainFrame();
             tela.iniciar();
             tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // comportamento ao fechar a janela
@@ -175,7 +178,23 @@ public class Login <usuarioObj> extends JFrame  {
             JOptionPane.showMessageDialog(null, "Cadastrado. Seu novo Email da Empresa: " + email);
         }
     }                                           
+    public void addAdmin(){
+        Usuario objUsuario = new Usuario();
+        String admin = "Admin@NeonNight.com";
+        String usuario = "Admin";
+        String senha = "Admin";
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        if (usuarioDAO.validarEmailExistente(admin)) {
+            System.out.println("Admin já está criado");
+            return;
+        } else {
+            if (objUsuario.addUsuario(usuario, senha)) {
+                System.out.println("Admin criado");
+            return;
+            }
 
+        }
+    }
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton Criar_botao;

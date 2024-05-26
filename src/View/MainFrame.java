@@ -2,19 +2,14 @@ package View;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 import Model.Bebida;
 import Model.Comida;
 import Model.Produto;
+import View.Login;
 
 public class MainFrame extends JFrame {
 
@@ -64,6 +59,7 @@ public class MainFrame extends JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        botao_admin = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -275,6 +271,7 @@ public class MainFrame extends JFrame {
 
         add(jPanel4, java.awt.BorderLayout.CENTER);
 
+
         Add_comida.setBackground(new java.awt.Color(15, 4, 55));
         Add_comida.setPreferredSize(new java.awt.Dimension(470, 667));
 
@@ -465,11 +462,23 @@ public class MainFrame extends JFrame {
         jLabel3.setForeground(new java.awt.Color(185, 21, 204));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("We Fight Through Dancing");
+        botao_admin.setBackground(new java.awt.Color(15, 4, 55));
+        botao_admin.setForeground(new java.awt.Color(200, 200, 200));
+        botao_admin.setText("Contas Cadastradas");
+        botao_admin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botao_adminActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -477,12 +486,11 @@ public class MainFrame extends JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(86, 86, 86)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(botao_admin)))
                 .addContainerGap(34, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -493,12 +501,15 @@ public class MainFrame extends JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addContainerGap(476, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 365, Short.MAX_VALUE)
+                .addComponent(botao_admin)
+                .addGap(88, 88, 88))
         );
 
         add(jPanel3, java.awt.BorderLayout.WEST);
         carregaTabela();
         carregatabelacomida();
+        isAdmin();
         Tabela_Bebida.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Tabela_BebidaMouseClicked(evt);
@@ -510,12 +521,16 @@ public class MainFrame extends JFrame {
             }
         });
 
-
     }// </editor-fold>                        
 
-    
 
-  
+    protected void botao_adminActionPerformed(ActionEvent evt) {
+        abaAdmin telaDoAdmin = new abaAdmin();
+        telaDoAdmin.iniciarAdmin();
+        telaDoAdmin.setSize(490, 586);
+        telaDoAdmin.setLocationRelativeTo(null); // Centralizar a janela
+        telaDoAdmin.setVisible(true);
+    }
 
 
     protected void Remover_comidaActionPerformed(ActionEvent evt) {
@@ -605,7 +620,6 @@ public class MainFrame extends JFrame {
         descricao = this.Descricao_comida.getText();
         valor = Float.parseFloat(this.Preco_comida.getText());
         id = idComida;
-        System.out.println("ID comida: " + idComida);
 
         if (this.objComida.Editar_comida(id, nome, descricao, valor, quantidadeEstoque)) {
 
@@ -754,6 +768,19 @@ public class MainFrame extends JFrame {
        }}
        }
 
+    public void isAdmin(){
+        botao_admin.setVisible(false);
+        boolean isUserAdmin = false;
+        if (Login.loggedUser.equals("Admin")) {
+            isUserAdmin = true;  
+        }
+
+    // Make the botao_admin button visible if the user is an admin
+    if (isUserAdmin) {
+        botao_admin.setVisible(true);
+    }
+       }
+
     // Variables declaration - do not modify                     
     private javax.swing.JButton Add_bebida;
     private javax.swing.JPanel Add_comida;
@@ -770,6 +797,7 @@ public class MainFrame extends JFrame {
     private javax.swing.JButton Remover_comida;
     private javax.swing.JTable Tabela_Bebida;
     private javax.swing.JTable Tabela_Comida;
+    private javax.swing.JButton botao_admin;
     private javax.swing.JTextField descricao_bebida;
     private javax.swing.JButton jButton2;
     private javax.swing.JFrame jFrame1;
